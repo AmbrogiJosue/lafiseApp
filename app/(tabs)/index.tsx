@@ -51,8 +51,8 @@ export default function HomeScreen() {
   return (
     <ScreenWrapper>
       {cargandoUsuario || cargandoCuenta || cargandoTransacciones ? (<ActivityIndicator size="large" color="#018765" />) : errorUsuario || errorCuenta || errorTransacciones ? (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#018765', fontSize: hp(3) }}>Error al cargar los datos</Text>
+        <View className='flex-1 justify-center items-center'>
+          <Text className='text-lafiseGreen text-lg'>Error al cargar los datos</Text>
           <TouchableOpacity onPress={() => {
             refetchUsuario();
             refetchCuenta();
@@ -65,58 +65,56 @@ export default function HomeScreen() {
       ) : (
         <>
           <ImageBackground source={require('../../assets/images/bg.jpg')} style={styles.backgroundImage} />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', padding: 5 }}>
-            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-              <Image source={require('../../assets/images/LAFISE.png')} style={{ height: hp(5), width: hp(5) }} />
-              <Text style={{ color: 'white', fontSize: hp(3) }}>Hola, {usuario?.full_name.split(' ')[0]}</Text>
+          <View className='flex-row justify-between items-start p-5'>
+            <View className='flex-row gap-4 items-center'>
+              <Image source={require('../../assets/images/LAFISE.png')} style={{ height: hp(4), width: hp(4) }} />
+              <Text className='text-white text-2xl'>Hola, {usuario?.full_name.split(' ')[0]}</Text>
             </View>
-            <View style={{ borderRadius: 999, overflow: 'hidden' }}>
-              <Image source={{ uri: usuario?.profile_photo }} style={{ height: 50, width: 50 }} />
+            <View className='rounded-full overflow-hidden' >
+              <Image source={{ uri: usuario?.profile_photo }} style={{ height: hp(4), width: hp(4) }} />
             </View>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hp(2), paddingHorizontal: wp(2) }}>
+          <View className='flex-row items-center mt-1 px-1'>
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: hp(3), padding: 10 }}> Mis productos</Text>
             <TouchableOpacity onPress={() => setHidden(!hidden)}>
               <Ionicons name={hidden ? 'eye-off' : 'eye'} size={24} color="white" />
             </TouchableOpacity>
           </View>
-          <View style={{ gap: 20, marginTop: hp(5), marginHorizontal: wp(2), padding: 30, backgroundColor: 'white', borderRadius: 28, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View className='gap-4 mt-2 mx-2 p-8 bg-white rounded-3xl shadow-black elevation-md' style={{ shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84 }}>
+            <View className='flex-row justify-between items-center'>
               <View>
-                <Text>
-                  Cuenta de ahorros
+                <Text className='text-xl'>
+                  Cuenta de ahorro
                 </Text>
-                <Text style={styles.subtext}>{usuario?.products[0].id}</Text>
+                <Text className='text-gray text-base'>{hidden ? '**********' : usuario?.products[0].id}</Text>
               </View>
               <TouchableOpacity onPress={() => { router.push({ pathname: '/transferencia/transferir', params: { id: usuario?.products[0].id, saldo: cuenta?.balance} }) }}>
                 <Ionicons name="send-outline" size={24} color='#018765' />
               </TouchableOpacity>
             </View>
 
-            <View style={{ marginVertical: 15 }}>
-              <Text style={styles.subtext}>
+            <View className='mt-3'>
+              <Text className='text-gray text-base'>
                 Saldo disponible
               </Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+              <View className='flex-row items-center gap-2'>
                 <Text >
-                  {cuenta?.currency}
+                  {hidden ? '***' : cuenta?.currency}
                 </Text>
-                <Text style={{ fontSize: hp(3), fontWeight: 'bold' }}>
-                  {cuenta?.balance.toLocaleString('es-NI')}
+                <Text className='text-3xl font-bold'>
+                  {hidden ? '******' :cuenta?.balance.toLocaleString('es-NI', { minimumFractionDigits: 2 })}
                 </Text>
               </View>
-
             </View>
-
-
           </View>
-          <View style={{ gap: 20, marginTop: hp(3), marginHorizontal: wp(2), padding: 30, backgroundColor: 'white', borderRadius: 28, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
-            <Text>
+
+          <View className='gap-4 my-4 mx-2 p-8 bg-white rounded-3xl shadow-black elevation-md' style={{ shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84 }}>
+            <Text className='text-2xl font-semibold'>
               Operaciones rápidas
             </Text>
 
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 20 }}>
+            <View className='flex-row justify-between items-center'>
 
               <IconButton color={Colors.lafiseGreenAccent} icon='cash' iconColor={Colors.lafiseGreen} descripcion={'Transferir \n dinero'} accion={() => { router.push({ pathname: '/transferencia/transferir', params: { id: usuario?.products[0].id, saldo: cuenta?.balance } }) }} />
 
@@ -128,12 +126,13 @@ export default function HomeScreen() {
 
             </View>
           </View>
+
           <FlatList
             data={transacciones?.items}
             renderItem={({ item }) => (
               <TransaccionDisplay
-                {...item}
-
+                item={item}
+                hidden={hidden}
               />
             )}
             keyExtractor={(item) => item.transaction_number.toString()}
@@ -147,16 +146,12 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  subtext: {
-    fontSize: hp(1.5),
-    color: '#888',
-  },
   backgroundImage: {
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
-    height: '50%',
+    height: '65%',
     zIndex: 0,
   },
 });

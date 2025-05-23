@@ -15,5 +15,5 @@
     "expo-env.d.ts",
     "app/services/api.js",
     "nativewind-env.d.ts"
-  ]
+, "app/(tabs)/productos.jsx"  ]
 }
