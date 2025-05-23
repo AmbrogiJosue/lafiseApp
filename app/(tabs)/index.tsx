@@ -11,6 +11,7 @@ import IconButton from '@/components/IconButton';
 import { useRouter } from 'expo-router';
 import { FlatList } from 'react-native-gesture-handler';
 import { useState } from 'react';
+import { Colors } from '@/constants/Colors';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -51,16 +52,14 @@ export default function HomeScreen() {
       {cargandoUsuario || cargandoCuenta || cargandoTransacciones ? (<ActivityIndicator size="large" color="#018765" />) : errorUsuario || errorCuenta || errorTransacciones ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text style={{ color: '#018765', fontSize: hp(3) }}>Error al cargar los datos</Text>
-          <IconButton
-            icon="refresh"
-            size={24}
-            color="#018765"
-            onPress={() => {
-              refetchUsuario();
-              refetchCuenta();
-              refetchTransacciones();
-            }}
-          />
+          <TouchableOpacity onPress={() => {
+            refetchUsuario();
+            refetchCuenta();
+            refetchTransacciones();
+          }} >
+            <Ionicons name="refresh" size={24} color="#018765" />
+          </TouchableOpacity>
+
         </View>
       ) : (
         <>
@@ -117,26 +116,14 @@ export default function HomeScreen() {
 
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 20 }}>
-              <View style={{ borderRadius: 28, padding: 10, backgroundColor: "#E6F3F0" }}>
-                <TouchableOpacity>
-                  <Ionicons name={'cash'} size={24} color="#018765" />
-                </TouchableOpacity>
-              </View>
-              <View style={{ borderRadius: 28, padding: 10, backgroundColor: "#EAE6F3" }}>
-                <TouchableOpacity>
-                  <Ionicons name={'cash-outline'} size={24} color="#52169E" />
-                </TouchableOpacity>
-              </View>
-              <View style={{ borderRadius: 28, padding: 10, backgroundColor: "#FFF3E9" }}>
-                <TouchableOpacity>
-                  <Ionicons name={'bulb'} size={24} color="#E8781C" />
-                </TouchableOpacity>
-              </View>
-              <View style={{ borderRadius: 28, padding: 10, backgroundColor: "#E6F7FD" }}>
-                <TouchableOpacity>
-                  <Ionicons name={'phone-portrait-outline'} size={24} color="#0079A8" />
-                </TouchableOpacity>
-              </View>
+
+              <IconButton color={Colors.lafiseGreenAccent} icon='cash' iconColor={Colors.lafiseGreen} descripcion={'Transferir \n dinero'} accion={() => { router.push('../transferir')}}/>
+
+              <IconButton color={Colors.yellowAccent} icon='bulb-outline' iconColor={Colors.yellow} descripcion={'Pagar \n servicio'} accion={() => {}}/>
+
+              <IconButton color={Colors.blueAccent} icon='phone-portrait-outline' iconColor={Colors.blue} descripcion={'Recargar \n Celular'} accion={() => {}}/>
+
+              <IconButton color={Colors.purpleAccent} icon='cash-outline' iconColor={Colors.purple} descripcion={'Retiro \n sin tarjeta'} accion={() => {}}/>
 
             </View>
           </View>

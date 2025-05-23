@@ -1,17 +1,20 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const IconButton = (color, icon) => {
+const IconButton = ({color, icon, iconColor, descripcion, accion}) => {
   return (
-    <View style={{borderRadius: 28, padding: 10, backgroundColor: color}}>
-      <TouchableOpacity>
-        <Ionicons name={icon} size={24} color={color} />
-      </TouchableOpacity>
+    <View className='align-items-center justify-center gap-2'>
+      <View className='rounded-3xl p-6' style={{ backgroundColor: color}}>
+        <TouchableOpacity onPress={accion}>
+          <Ionicons name={icon} size={24} color={iconColor} />
+        </TouchableOpacity>
+      </View>
+      <Text className="text-center text-gray ">
+        {descripcion}
+      </Text>
     </View>
   )
 }
 
 export default IconButton
-
-const styles = StyleSheet.create({})
