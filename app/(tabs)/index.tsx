@@ -7,11 +7,12 @@ import useFetch from '../services/useFetch';
 import { fetchAccounts, fetchTransactions, fetchUserData } from '../services/api';
 import { Ionicons } from '@expo/vector-icons';
 import { hp } from '@/helper/sizing';
-import IconButton from '@/components/IconButton';
+import IconButton from '@/components/ui/IconButton';
 import { useRouter } from 'expo-router';
 import { FlatList } from 'react-native-gesture-handler';
 import { useState } from 'react';
 import { Colors } from '@/constants/Colors';
+
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -87,7 +88,7 @@ export default function HomeScreen() {
                 </Text>
                 <Text style={styles.subtext}>{usuario?.products[0].id}</Text>
               </View>
-              <TouchableOpacity onPress={() => { router.push('../transferir') }}>
+              <TouchableOpacity onPress={() => { router.push('/transferencia/transferir') }}>
                 <Ionicons name="send-outline" size={24} color='#018765' />
               </TouchableOpacity>
             </View>
@@ -101,7 +102,7 @@ export default function HomeScreen() {
                   {cuenta?.currency}
                 </Text>
                 <Text style={{ fontSize: hp(3), fontWeight: 'bold' }}>
-                  {cuenta?.balance}
+                  {cuenta?.balance.toLocaleString('es-NI')}
                 </Text>
               </View>
 
@@ -117,7 +118,7 @@ export default function HomeScreen() {
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 20 }}>
 
-              <IconButton color={Colors.lafiseGreenAccent} icon='cash' iconColor={Colors.lafiseGreen} descripcion={'Transferir \n dinero'} accion={() => { router.push('../transferir')}}/>
+              <IconButton color={Colors.lafiseGreenAccent} icon='cash' iconColor={Colors.lafiseGreen} descripcion={'Transferir \n dinero'} accion={() => { router.push('/transferencia/transferir')}}/>
 
               <IconButton color={Colors.yellowAccent} icon='bulb-outline' iconColor={Colors.yellow} descripcion={'Pagar \n servicio'} accion={() => {}}/>
 
