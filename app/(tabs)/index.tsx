@@ -8,7 +8,7 @@ import { fetchAccounts, fetchTransactions, fetchUserData } from '../services/api
 import { Ionicons } from '@expo/vector-icons';
 import { hp } from '@/helper/sizing';
 import IconButton from '@/components/IconButton';
-import { useRouter} from 'expo-router';
+import { useRouter } from 'expo-router';
 import { FlatList } from 'react-native-gesture-handler';
 import { useState } from 'react';
 
@@ -33,7 +33,7 @@ export default function HomeScreen() {
     data: transacciones,
     loading: cargandoTransacciones,
     error: errorTransacciones,
-    refetch: refetchTransacciones, 
+    refetch: refetchTransacciones,
   } = useFetch(() => fetchTransactions(usuario?.products[0].id))
 
   const { width: deviceWidth, height: deviceHeight } = Dimensions.get('screen')
@@ -48,7 +48,7 @@ export default function HomeScreen() {
 
   return (
     <ScreenWrapper>
-      {cargandoUsuario || cargandoCuenta || cargandoTransacciones ? (<ActivityIndicator size="large" color="#018765" />)  : errorUsuario || errorCuenta || errorTransacciones  ? (
+      {cargandoUsuario || cargandoCuenta || cargandoTransacciones ? (<ActivityIndicator size="large" color="#018765" />) : errorUsuario || errorCuenta || errorTransacciones ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text style={{ color: '#018765', fontSize: hp(3) }}>Error al cargar los datos</Text>
           <IconButton
@@ -75,10 +75,10 @@ export default function HomeScreen() {
             </View>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hp(2), paddingHorizontal: wp(2) }}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize:hp(3), padding: 10}}> Mis productos</Text>
-        <TouchableOpacity onPress={() => setHidden(!hidden)}>
-            <Ionicons name={hidden ? 'eye-off':'eye'} size={24} color="white" />
-          </TouchableOpacity>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: hp(3), padding: 10 }}> Mis productos</Text>
+            <TouchableOpacity onPress={() => setHidden(!hidden)}>
+              <Ionicons name={hidden ? 'eye-off' : 'eye'} size={24} color="white" />
+            </TouchableOpacity>
           </View>
           <View style={{ gap: 20, marginTop: hp(5), marginHorizontal: wp(2), padding: 30, backgroundColor: 'white', borderRadius: 28, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -88,7 +88,7 @@ export default function HomeScreen() {
                 </Text>
                 <Text style={styles.subtext}>{usuario?.products[0].id}</Text>
               </View>
-              <TouchableOpacity onPress={() => {router.push('../transferir')}}>
+              <TouchableOpacity onPress={() => { router.push('../transferir') }}>
                 <Ionicons name="send-outline" size={24} color='#018765' />
               </TouchableOpacity>
             </View>
@@ -122,6 +122,11 @@ export default function HomeScreen() {
                   <Ionicons name={'cash'} size={24} color="#018765" />
                 </TouchableOpacity>
               </View>
+              <View style={{ borderRadius: 28, padding: 10, backgroundColor: "#EAE6F3" }}>
+                <TouchableOpacity>
+                  <Ionicons name={'cash-outline'} size={24} color="#52169E" />
+                </TouchableOpacity>
+              </View>
               <View style={{ borderRadius: 28, padding: 10, backgroundColor: "#FFF3E9" }}>
                 <TouchableOpacity>
                   <Ionicons name={'bulb'} size={24} color="#E8781C" />
@@ -132,23 +137,19 @@ export default function HomeScreen() {
                   <Ionicons name={'phone-portrait-outline'} size={24} color="#0079A8" />
                 </TouchableOpacity>
               </View>
-              <View style={{ borderRadius: 28, padding: 10, backgroundColor: "#EAE6F3" }}>
-                <TouchableOpacity>
-                  <Ionicons name={'cash-outline'} size={24} color="#52169E" />
-                </TouchableOpacity>
-              </View>
+
             </View>
           </View>
-          <FlatList 
-          data={transacciones?.items}
-          renderItem={({ item }) => (
+          <FlatList
+            data={transacciones?.items}
+            renderItem={({ item }) => (
               <TransaccionDisplay
                 {...item}
 
               />
             )}
             keyExtractor={(item) => item.transaction_number.toString()}
-            scrollEnabled={true}/>
+            scrollEnabled={true} />
         </>
       )}
 
