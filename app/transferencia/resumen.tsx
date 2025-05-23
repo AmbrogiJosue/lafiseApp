@@ -4,10 +4,14 @@ import LargeButton from '@/components/ui/LargeButton'
 import { Colors } from '@/constants/Colors'
 import ScreenWrapper from '@/components/ScreenWrapper'
 import { Ionicons } from '@expo/vector-icons'
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 const resumen = () => {
     const router = useRouter();
+
+    const data = useLocalSearchParams();
+    console.log(data);
+    
     return (
         <ScreenWrapper bg='black'>
             <View className='justify-between flex-1'>
@@ -29,21 +33,21 @@ const resumen = () => {
 
                     <View className='gap-2 pb-3 justify-center items-center'>
                         <Text className='text-lg text-gray font-semibold'>Total enviado</Text>
-                        <Text className='text-xl '>C$ 1,000.00</Text>
+                        <Text className='text-xl '>C${data?.monto}</Text>
                     </View>
 
                     <View className='gap-2 pb-3 justify-center items-center'>
                         <Text className='text-lg text-gray font-semibold'>Al número de cuenta</Text>
-                        <Text className='text-xl '>1,000.00</Text>
+                        <Text className='text-xl '>{data?.cuenta}</Text>
                     </View>
 
                     <View className='gap-2 pb-3 justify-center items-center'>
                         <Text className='text-lg text-gray font-semibold'>Cuenta utilizada para el envió</Text>
-                        <Text className='text-xl '>1,000.00</Text>
+                        <Text className='text-xl '>{data?.origen}</Text>
                     </View>
 
                 </View>
-                <LargeButton titulo='Volver al inicio' color={Colors.lafiseGreen} textColor={'white'} accion={() => router.replace('/(tabs)')} />
+                <LargeButton titulo='Volver al inicio' color={Colors.lafiseGreen} textColor={'white'} accion={() => router.replace('/(tabs)')} disabled={false}/>
             </View>
 
 

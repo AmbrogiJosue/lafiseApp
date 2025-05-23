@@ -88,7 +88,7 @@ export default function HomeScreen() {
                 </Text>
                 <Text style={styles.subtext}>{usuario?.products[0].id}</Text>
               </View>
-              <TouchableOpacity onPress={() => { router.push('/transferencia/transferir') }}>
+              <TouchableOpacity onPress={() => { router.push({ pathname: '/transferencia/transferir', params: { id: usuario?.products[0].id, saldo: cuenta?.balance} }) }}>
                 <Ionicons name="send-outline" size={24} color='#018765' />
               </TouchableOpacity>
             </View>
@@ -118,13 +118,13 @@ export default function HomeScreen() {
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 20 }}>
 
-              <IconButton color={Colors.lafiseGreenAccent} icon='cash' iconColor={Colors.lafiseGreen} descripcion={'Transferir \n dinero'} accion={() => { router.push('/transferencia/transferir')}}/>
+              <IconButton color={Colors.lafiseGreenAccent} icon='cash' iconColor={Colors.lafiseGreen} descripcion={'Transferir \n dinero'} accion={() => { router.push({ pathname: '/transferencia/transferir', params: { id: usuario?.products[0].id, saldo: cuenta?.balance } }) }} />
 
-              <IconButton color={Colors.yellowAccent} icon='bulb-outline' iconColor={Colors.yellow} descripcion={'Pagar \n servicio'} accion={() => {}}/>
+              <IconButton color={Colors.yellowAccent} icon='bulb-outline' iconColor={Colors.yellow} descripcion={'Pagar \n servicio'} accion={() => { }} />
 
-              <IconButton color={Colors.blueAccent} icon='phone-portrait-outline' iconColor={Colors.blue} descripcion={'Recargar \n Celular'} accion={() => {}}/>
+              <IconButton color={Colors.blueAccent} icon='phone-portrait-outline' iconColor={Colors.blue} descripcion={'Recargar \n Celular'} accion={() => { }} />
 
-              <IconButton color={Colors.purpleAccent} icon='cash-outline' iconColor={Colors.purple} descripcion={'Retiro \n sin tarjeta'} accion={() => {}}/>
+              <IconButton color={Colors.purpleAccent} icon='cash-outline' iconColor={Colors.purple} descripcion={'Retiro \n sin tarjeta'} accion={() => { }} />
 
             </View>
           </View>

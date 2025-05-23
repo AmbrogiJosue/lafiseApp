@@ -1,19 +1,15 @@
+import axios from 'axios';
 
 export const fetchUserData = async () => {
     try {
-        const response = await fetch(`http://localhost:5566/users/1134948394`, 
+        const response = await axios.get(`http://localhost:5566/users/1134948394`, 
             {
-                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }
         )
-        if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
-        }
-        const data = await response.json();
-        return data;
+        return response.data;
     }
     catch (error) {
         throw new Error('Error al obtener los datos del usuario');
@@ -22,19 +18,14 @@ export const fetchUserData = async () => {
 
 export const fetchAccounts = async (id) => {
         try {
-        const response = await fetch(`http://localhost:5566/accounts/${id}`, 
+        const response = await axios.get(`http://localhost:5566/accounts/${id}`, 
             {
-                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }
         )
-        if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
-        }
-        const data = await response.json();
-        return data;
+        return response.data;
     }
     catch (error) {
         throw new Error('Error al obtener los datos de la cuenta');
@@ -43,21 +34,35 @@ export const fetchAccounts = async (id) => {
 
 export const fetchTransactions = async (id) => {
     try {
-        const response = await fetch(`http://localhost:5566/accounts/${id}/transactions`, 
+        const response = await axios.get(`http://localhost:5566/accounts/${id}/transactions`, 
             {
-                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }
         )
-        if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
-        }
-        const data = await response.json();
-        return data;
+        return response.data;
     }
     catch (error) {
         throw new Error('Error al obtener el historial de transacciones');
+    }
+}
+
+export const transferir = async (data) => {
+    try {
+        const response = await axios.post('http://localhost:5566/transactions', {
+            'origin': data.origen,
+            'destination': data.cuenta,
+            'amount': {
+                'currency': 'NIO',
+                'value': data.monto
+            } 
+        })
+        console.log(response);
+        
+        return { success: true }
+    }
+    catch (error) {
+        return { success: false, error}
     }
 }

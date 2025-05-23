@@ -8,16 +8,19 @@ interface InputProps extends TextInputProps {
     placeholder?: string
 }
 
-const Input: React.FC<InputProps> = (props) => {
+const Input: React.FC<InputProps> = ({ titulo, placeholder, value, ...props }) => {
     return (
         <View className='w-full p-5'>
-            <Text className='text-lg font-semibold'>{props.titulo}</Text>
+            <Text className='text-lg font-semibold'>{titulo}</Text>
             <View className='border border-lightGray rounded-3xl justify-between flex-row items-center'>
                 <TextInput
                     className=' p-5 text-2xl font-semibold'
-                    placeholder={props.placeholder}
+                    placeholder={placeholder}
+                    value={value}
                     {...props} />
-                <Octicons name='pencil' size={24} className='px-5'/>
+                {value && value.toString().length > 0 && (
+                    <Octicons name='pencil' size={24} className='px-5' />
+                )}
             </View>
         </View>
     )
